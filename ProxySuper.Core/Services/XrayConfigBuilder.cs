@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProxySuper.Core.Models.Projects;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace ProxySuper.Core.Services
@@ -91,7 +93,7 @@ namespace ProxySuper.Core.Services
             return caddyStr;
         }
 
-        private static void SetClients(dynamic bound, List<string> uuidList, bool withXtls = false)
+        private static void SetClients(dynamic bound, List<string> uuidList, bool withXtls = false, string flow = "xtls-rprx-direct")
         {
             bound.settings.clients.Clear();
             uuidList.ForEach(id =>
@@ -99,17 +101,50 @@ namespace ProxySuper.Core.Services
                 object obj;
                 if (!withXtls)
                 {
-                    obj = new { id = id };
+                    obj = new { id };
                 }
                 else
                 {
-                    obj = new { id = id, flow = "xtls-rprx-direct" };
+                    obj = new { id, flow };
                 }
 
                 bound.settings.clients.Add(JToken.FromObject(obj));
             });
         }
 
+        /// <summary>
+        /// https://github.com/XTLS/Xray-core/releases/tag/v1.6.2.
+        /// </summary>
+        /// <param name="version"></param>
+        /// <returns></returns>
+        private static bool CheckVersionForVision(string version)
+        {
+            var arr = version
+                ?.Replace("v", string.Empty)
+                .Replace("[PRE]", string.Empty)
+                .Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            if (arr == null || arr.Count <= 2)
+            {
+                return false;
+            }
+
+            if (!int.TryParse(arr[0], out var version1) && version1 < 1)
+            {
+                return false;
+            }
+
+            if (!int.TryParse(arr[1], out var version2) && version2 < 6)
+            {
+                return false;
+            }
+
+            if (!int.TryParse(arr[2], out var version3) && version3 < 2)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         public static string BuildXrayConfig(XraySettings parameters)
         {
@@ -119,15 +154,16 @@ namespace ProxySuper.Core.Services
 
             var xrayConfig = LoadXrayConfig();
 
-            var baseBound = GetBound("VLESS_TCP_XTLS.json");
+            var isVision = parameters.XTlSFlowOption?.ToLower().Contains("vision") == true && CheckVersionForVision(parameters.XrayVersionOption);
+            var baseBound = isVision ? GetBound("VLESS_TCP_XTLS_Vision.json") : GetBound("VLESS_TCP_XTLS.json");
+
             baseBound.port = parameters.Port;
             baseBound.settings.fallbacks.Add(JToken.FromObject(new
             {
                 dest = FullbackPort
             }));
-            baseBound.streamSettings.xtlsSettings.fingerprint = parameters.UTLSOption;
             xrayConfig.inbounds.Add(baseBound);
-            SetClients(baseBound, uuidList, withXtls: true);
+            SetClients(baseBound, uuidList, withXtls: true, flow: parameters.XTlSFlowOption);
 
             #region Fullbacks
 

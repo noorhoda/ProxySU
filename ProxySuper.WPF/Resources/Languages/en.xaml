@@ -82,6 +82,9 @@
     <sys:String x:Key="XrayWithTLSDesc">Unchecked means upload your own TLS.</sys:String>
     <sys:String x:Key="XrayUUID">UUID</sys:String>
     <sys:String x:Key="XrayUTLS">uTLS</sys:String>
+    <sys:String x:Key="XrayXTLSFlow">XTLS FLow</sys:String>
+    <sys:String x:Key="XrayVersion">XrayCore Version</sys:String>
+    <sys:String x:Key="GetXrayVersion">Get Version List</sys:String>
     <sys:String x:Key="MultiUser">Multi User</sys:String>
     <sys:String x:Key="MultiUserHelp">Multi Id split with ","</sys:String>
     <sys:String x:Key="VlessWsPath">VLESS WS Path</sys:String>
@@ -101,6 +104,8 @@
     <sys:String x:Key="TrojanPort">Trojan Port</sys:String>
     <sys:String x:Key="XrayPort">xray Port</sys:String>
     <sys:String x:Key="XrayPortDefault">default port is 443</sys:String>
+    <sys:String x:Key="XTLSFlowDefault">vision need core version > 1.6.2</sys:String>
+    <sys:String x:Key="CoreVersionDefault">Click Get Version to install other versions, Do not select the latest official version by default, it can also be filled in manually</sys:String>
 
     <!--xray installer-->
     <sys:String x:Key="XrayInstallerInstall">Install</sys:String>

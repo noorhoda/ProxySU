@@ -1,6 +1,7 @@
 ﻿using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
+using ProxySuper.Core.Helpers;
 using ProxySuper.Core.Models;
 using ProxySuper.Core.Models.Hosts;
 using ProxySuper.Core.Models.Projects;
@@ -65,7 +66,9 @@ namespace ProxySuper.Core.ViewModels
 
     public partial class XrayEditorViewModel
     {
-        public IMvxCommand RandomUuid => new MvxCommand(() => GetUuid());
+        public IMvxCommand RandomUuid => new MvxCommand(GetUuid);
+
+        public IMvxCommand GetVersionList => new MvxCommand(() => RaisePropertyChanged("XrayVersionOptions"));
 
         public bool WithTLS
         {
@@ -169,11 +172,12 @@ namespace ProxySuper.Core.ViewModels
                 var trimValue = value.Replace(namespaceStr, "");
                 trimValue = trimValue.Trim();
                 Settings.UTLSOption = trimValue;
-                RaisePropertyChanged("UTLSOption");
+                RaisePropertyChanged();
             }
         }
-        private List<string> _uTlsOptions = new List<string> { string.Empty, "chrome", "firefox", "safari", "randomized" };
-        public List<string> UTLSOptions => _uTlsOptions;
+
+        public List<string> UTLSOptions { get; } = new List<string> { string.Empty, "chrome", "firefox", "safari", "randomized" };
+
         public bool CheckedUTLSOptions
         {
 
@@ -181,7 +185,59 @@ namespace ProxySuper.Core.ViewModels
             set
             {
                 CheckBoxChanged(value, RayType.VLESS_TCP_XTLS);
-                RaisePropertyChanged("CheckedUTLSOptions");
+                RaisePropertyChanged();
+            }
+        }
+
+        public string XTLSFlowOption
+        {
+            get => Settings.XTlSFlowOption;
+            set
+            {
+                var namespaceStr = typeof(ComboBoxItem).FullName + ":";
+                var trimValue = value.Replace(namespaceStr, "");
+                trimValue = trimValue.Trim();
+                Settings.XTlSFlowOption = trimValue;
+                RaisePropertyChanged();
+            }
+        }
+
+        public List<string> XTLSFlowOptions { get; } = new List<string> { "xtls-rprx-direct", "xtls-rprx-vision", "xtls-rprx-splice", "xtls-rprx-origin" };
+
+        public bool CheckedXTLSFlowOptions
+        {
+
+            get => Settings.Types.Contains(RayType.VLESS_TCP_XTLS);
+            set
+            {
+                CheckBoxChanged(value, RayType.VLESS_TCP_XTLS);
+                RaisePropertyChanged();
+            }
+        }
+
+        public string XrayVersionOption
+        {
+            get => Settings.XrayVersionOption;
+            set
+            {
+                var namespaceStr = typeof(ComboBoxItem).FullName + ":";
+                var trimValue = value.Replace(namespaceStr, "");
+                trimValue = trimValue.Trim();
+                Settings.XrayVersionOption = trimValue;
+                RaisePropertyChanged();
+            }
+        }
+
+        public List<string> XrayVersionOptions => HttpRequester.CoreVersionList;
+
+        public bool CheckedXrayVersionOptions
+        {
+
+            get => Settings.Types.Contains(RayType.VLESS_TCP_XTLS);
+            set
+            {
+                CheckBoxChanged(value, RayType.VLESS_TCP_XTLS);
+                RaisePropertyChanged();
             }
         }
 
@@ -273,7 +329,6 @@ namespace ProxySuper.Core.ViewModels
             UUID = Guid.NewGuid().ToString();
             RaisePropertyChanged("UUID");
         }
-
     }
 
     /// <summary>

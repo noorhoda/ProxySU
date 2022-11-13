@@ -163,7 +163,10 @@ namespace ProxySuper.Core.Services
                     EnsureSystemEnv();
                     Progress.Percentage = 40;
 
-                    RunCmd("bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install");
+                    var version = string.IsNullOrEmpty(Settings.XrayVersionOption)
+                        ? string.Empty
+                        : $" --version {Settings.XrayVersionOption.Replace(".[PRE]", string.Empty).Replace("v", string.Empty)}";
+                    RunCmd($"bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install{version}");
                     RunCmd("systemctl restart xray");
                     Progress.Percentage = 100;
 
@@ -378,7 +381,10 @@ namespace ProxySuper.Core.Services
         private void InstallXray()
         {
             Progress.Desc = ("开始安装Xray-Core");
-            RunCmd("bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install");
+            var version = string.IsNullOrEmpty(Settings.XrayVersionOption)
+                ? string.Empty
+                : $" --version {Settings.XrayVersionOption.Replace(".[PRE]", string.Empty).Replace("v", string.Empty)}";
+            RunCmd($"bash -c \"$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)\" @ install{version}");
 
             if (!FileExists("/usr/local/bin/xray"))
             {

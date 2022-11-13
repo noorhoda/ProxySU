@@ -82,6 +82,9 @@
     <sys:String x:Key="XrayWithTLSDesc">如上传自有证书，则取消对勾。</sys:String>
     <sys:String x:Key="XrayUUID">UUID</sys:String>
     <sys:String x:Key="XrayUTLS">uTLS</sys:String>
+    <sys:String x:Key="XrayXTLSFlow">XTLS 流控</sys:String>
+    <sys:String x:Key="XrayVersion">XrayCore 版本</sys:String>
+    <sys:String x:Key="GetXrayVersion">获取版本</sys:String>
     <sys:String x:Key="MultiUser">多用户</sys:String>
     <sys:String x:Key="MultiUserHelp">多个UUID用“,”分隔</sys:String>
     <sys:String x:Key="VlessWsPath">VLESS WS路径</sys:String>
@@ -101,6 +104,8 @@
     <sys:String x:Key="TrojanPort">Trojan端口</sys:String>
     <sys:String x:Key="XrayPort">xray端口</sys:String>
     <sys:String x:Key="XrayPortDefault">默认端口443，不建议修改</sys:String>
+    <sys:String x:Key="XTLSFlowDefault">vision需要Core版本>=1.6.2</sys:String>
+    <sys:String x:Key="CoreVersionDefault">点击获取版本以安装其他版本，不选择默认为最新正式版，也可手动填写</sys:String>
 
     <!--xray installer-->
     <sys:String x:Key="XrayInstallerInstall">一键安装</sys:String>

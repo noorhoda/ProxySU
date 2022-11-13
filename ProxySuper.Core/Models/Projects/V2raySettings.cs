@@ -13,6 +13,8 @@ namespace ProxySuper.Core.Models.Projects
         {
             WithTLS = true;
             UTLSOption = string.Empty;
+            XTlSFlowOption = string.Empty;
+            XrayVersionOption = string.Empty;
 
             var guid = Guid.NewGuid().ToString();
             Port = 443;
@@ -119,6 +121,16 @@ namespace ProxySuper.Core.Models.Projects
         /// uTLS选项.
         /// </summary>
         public string UTLSOption { get; set; }
+
+        /// <summary>
+        /// XTLS流控.
+        /// </summary>
+        public string XTlSFlowOption { get; set; }
+
+        /// <summary>
+        /// Xray版本.
+        /// </summary>
+        public string XrayVersionOption { get; set; }
 
         [JsonIgnore]
         public string Email

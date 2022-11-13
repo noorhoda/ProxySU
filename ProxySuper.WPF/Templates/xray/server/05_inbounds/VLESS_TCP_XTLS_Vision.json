@@ -5,7 +5,7 @@
     "clients": [
       {
         "id": "",
-        "flow": "xtls-rprx-direct"
+        "flow": "xtls-rprx-vision"
       }
     ],
     "decryption": "none",
@@ -13,8 +13,8 @@
   },
   "streamSettings": {
     "network": "tcp",
-    "security": "xtls",
-    "xtlsSettings": {
+    "security": "tls",
+    "tlsSettings": {
       "allowInsecure": false,
       "minVersion": "1.2",
       "alpn": [

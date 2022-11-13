@@ -67,9 +67,12 @@
     <Compile Include="Converters\ProxyTypeConverter.cs" />
     <Compile Include="Converters\VisibleConverter.cs" />
     <Compile Include="Helpers\DateTimeUtils.cs" />
+    <Compile Include="Helpers\HttpClientUtil.cs" />
+    <Compile Include="Helpers\HttpRequester.cs" />
     <Compile Include="Models\Caddy.cs" />
     <Compile Include="Models\Hosts\Host.cs" />
     <Compile Include="Models\Hosts\LoginSecretType.cs" />
+    <Compile Include="Models\Http\XrayVersionResponse.cs" />
     <Compile Include="Models\ProjectProgress.cs" />
     <Compile Include="Models\Projects\BrookSettings.cs" />
     <Compile Include="Models\Projects\BrookType.cs" />

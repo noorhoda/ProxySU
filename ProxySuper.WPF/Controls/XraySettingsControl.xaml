@@ -139,6 +139,36 @@
                 </ComboBox>
             </StackPanel>
 
+            <!--TLS Flow Options-->
+            <StackPanel Margin="30,15,0,0"
+                        Orientation="Horizontal">
+                <Label Content="{DynamicResource XrayXTLSFlow}" Width="120"  />
+                <ComboBox Width="120" 
+                          ItemsSource="{Binding Path=XTLSFlowOptions}"
+                          SelectedValue="{Binding XTLSFlowOption}">
+                </ComboBox>
+                <Label Content="{DynamicResource XTLSFlowDefault}"  Foreground="Red" />
+            </StackPanel>
+
+            <!--Xray Version-->
+            <StackPanel Margin="30,15,0,0"
+                        Orientation="Horizontal">
+                <Label Content="{DynamicResource XrayVersion}" Width="120"  />
+                <ComboBox Width="200"
+                          IsEditable="True"
+                          ItemsSource="{Binding Path=XrayVersionOptions}"
+                          SelectedValue="{Binding XrayVersionOption}">
+                </ComboBox>
+                <Button Margin="5,0,0,0"
+                        Padding="12,3"
+                        Command="{Binding Path=GetVersionList}"
+                        Content="{DynamicResource GetXrayVersion}" />
+            </StackPanel>
+            <StackPanel Margin="30,15,0,0"
+                        Orientation="Horizontal">
+                <Label Content="{DynamicResource CoreVersionDefault}"  Foreground="Red" />
+            </StackPanel>
+
             <!--WebSocket Path-->
             <StackPanel Margin="30,15,0,0"
                     Orientation="Horizontal"

@@ -164,6 +164,7 @@ namespace ProxySuper.Core.Services
             var _descriptiveText = string.Empty;
             var _headerType = "none";
             var _seed = string.Empty;
+            var _flow = string.IsNullOrEmpty(settings.XTlSFlowOption) ? "xtls-rprx-direct" : settings.XTlSFlowOption;
 
             switch (xrayType)
             {
@@ -175,7 +176,7 @@ namespace ProxySuper.Core.Services
                 case RayType.VLESS_TCP_XTLS:
                     _protocol = "vless";
                     _type = "tcp";
-                    _security = "xtls";
+                    _security = _flow.Contains("vision") ? "tls" : "xtls";
                     _descriptiveText = "vless-tcp-xtls";
                     break;
                 case RayType.VLESS_WS:
@@ -224,7 +225,7 @@ namespace ProxySuper.Core.Services
                 // 4.4 TLS 相关段
                 if (xrayType == RayType.VLESS_TCP_XTLS)
                 {
-                    parametersURL += "&flow=xtls-rprx-direct";
+                    parametersURL += $"&flow={_flow}";
                 }
 
 
